@@ -1,6 +1,6 @@
-import express from "express";
-import morgan from "morgan";
-import mongoose from "mongoose";
+const express = require("express");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3002;
 
@@ -10,6 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static("public"));
+
+const routes = require("./routes/html_routes.js")
+app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`Application now running on ${PORT}`);
