@@ -11,6 +11,16 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+mongoose.connect(
+    process.env.MONGODB_URI || 'mongodb://localhost/thawing-fortress-20903',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  );
+
 const routes = require("./routes/html_routes.js")
 app.use(routes);
 
