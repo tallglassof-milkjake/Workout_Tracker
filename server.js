@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.connect(
-    process.env.MONGODB_URI || 'mongodb://localhost/thawing-fortress-20903',
+    process.env.MONGODB_URI || 'mongodb://localhost/Workout_db',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

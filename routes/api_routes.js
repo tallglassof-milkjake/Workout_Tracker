@@ -1,15 +1,24 @@
 const router = require("express").Router();
-const { response } = require("express");
+const { response, json } = require("express");
 const path = require("path");
-const Workout = require("../models/workout_models");
+const Workout = require("../models");
 
-router.get("/api/exercise", function(req, res) {
+router.get("/api/workouts", function(req, res) {
     Workout.fin({}).sort({ createdAt: -1}).limit(1).then(function(result) {
         res.json(result);
     });
 });
 
-router.put("/api/exercise/:id", function(req, res) {
+router.post("/api/workouts", (req, res) => {
+    Workout.create(req.body)
+    .then(workdb => {
+        res,json(workdb);
+    }).catch(err => {
+        res.status(400).json(err);
+    });
+});
+
+router.put("/api/workouts/:id", function(req, res) {
     let newWorkout = Workout.create({
         type: req.body.type,
         name: req.body.name,
