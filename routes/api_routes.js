@@ -1,35 +1,63 @@
 const router = require("express").Router();
 const { response, json } = require("express");
 const path = require("path");
-const Workout = require("../models");
+const db = require("../models");
 
-router.get("/api/workouts", function(req, res) {
-    Workout.fin({}).sort({ createdAt: -1}).limit(1).then(function(result) {
+router.get("/api/workouts", async (req, res) => {
+    db.Workout.find({}).sort({day: -1}).limit(1).then(result => {
         res.json(result);
-    });
-});
-
-router.post("/api/workouts", (req, res) => {
-    Workout.create(req.body)
-    .then(workdb => {
-        res,json(workdb);
     }).catch(err => {
         res.status(400).json(err);
     });
 });
 
-router.put("/api/workouts/:id", function(req, res) {
-    let newWorkout = Workout.create({
+router.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({})
+    .then(data => {
+        res.json(data);
+    }).catch(err => {
+        res.status(400).json(err);
+    });
+});
+
+router.post("/api/workouts", (req, res) => {
+    let newWorkout = {
         type: req.body.type,
         name: req.body.name,
+        distance: req.body.distance,
         duration: req.body.duration,
         weight: req.body.weight,
         reps: req.body.reps,
         sets: req.body.sets,
-        distance: req.body.distance,
-    }).then(function() {
-        Workout.findOneAndUpdate({"id": req.params.id}, {$push: {exercises: newExercise}}, {new: true});
+    };
 
-        res.json(newWorkout);
+    db.Workout.create({exercises: newWorkout}).then((result) => {
+        res.json(result);
+    }).catch(err => {
+        res.status(400).json(err);
     });
-})
+  });
+
+router.put("/api/workouts/:_id", (req, res) => {
+    let newWorkout = {
+        type: req.body.type,
+        name: req.body.name,
+        distance: req.body.distance,
+        duration: req.body.duration,
+        weight: req.body.weight,
+        reps: req.body.reps,
+        sets: req.body.sets,
+    };
+
+    db.Workout.findByIdAndUpdate(req.params.id, {$push: {exercises: newWorkout}}, {new: true}, (err, result) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.json(result)
+        };
+    }).catch(err => {
+        res.status(400).json(err);
+    });
+  });
+
+module.exports = router;

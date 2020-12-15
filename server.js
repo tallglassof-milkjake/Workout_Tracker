@@ -21,8 +21,14 @@ mongoose.connect(
     }
   );
 
-const routes = require("./routes/html_routes.js")
-app.use(routes);
+  app.use(require("./routes/api_routes"));
+  app.use(require("./routes/html_routes"));
+
+const mongooseConnection = mongoose.connection;
+mongooseConnection.on('error', console.error.bind(console, 'connection error:'));
+mongooseConnection.once('open', function() {
+  console.log("connected to mongoosedb!");
+});
 
 app.listen(PORT, () => {
     console.log(`Application now running on ${PORT}`);
