@@ -3,13 +3,13 @@ const { response } = require("express");
 const path = require("path");
 const Workout = require("../models/workout_models");
 
-router.get("/api/workouts", function(req, res) {
+router.get("/api/exercise", function(req, res) {
     Workout.fin({}).sort({ createdAt: -1}).limit(1).then(function(result) {
         res.json(result);
     });
 });
 
-router.put("/api/workouts/:id", function(req, res) {
+router.put("/api/exercise/:id", function(req, res) {
     let newWorkout = Workout.create({
         type: req.body.type,
         name: req.body.name,
