@@ -44,8 +44,8 @@ None
 
 ### Screenshots
 
-![See Last Workout](assets.last_workout.png)
+![See Last Workout](/assets.last_workout.png)
 
-![Start a New Workout](assets.new-exercise.png)
+![Start a New Workout](/assets.new-exercise.png)
 
-![See your Stats](assets.stats.png)
+![See your Stats](/assets.stats.png)
